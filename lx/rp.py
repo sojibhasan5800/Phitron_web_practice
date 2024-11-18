@@ -1,2 +1,2 @@
-print("yy")
+print("yy(main)------")
 print(20)
