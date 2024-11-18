@@ -1,2 +1,2 @@
-print("yy")
+print("yy--------(cpy)")
 print(20)
