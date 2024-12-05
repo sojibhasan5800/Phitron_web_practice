@@ -26,11 +26,23 @@ class admin_manage(shape):
         try:
 
             if isinstance(item_name,str) and isinstance(item_quantity,int) and isinstance(item_price,int):
-                self.__items_list[item_name]=[item_quantity,item_price]
+
+                new_value_lst=[item_quantity,item_price]
+                self.__items_list[item_name]= self.__items_list.get(item_name,[0]*len(new_value_lst))
+                self.__items_list[item_name]=list(map(lambda x,y : x+y,self.__items_list[item_name],new_value_lst))
                 print(f"item_list {item_name} is added in successfully")
+
         except Exception as e:
-            print(f"{e} : Sir place check your items information and try again !")
-            return
+
+            if "item_quantity" not in  locals():
+                print("item_quantity are Invalid Place given Only integer Number")
+            elif "item_price" not in  locals():
+                print("item_price are Invalid Place given Only integer Number")
+
+            print(f"{type(e).__name__} : Sir place check your items information and try again !")
+            return False
+        
+        return True
 
     #admin View of this items of list:  
     def view_item(self):
@@ -40,18 +52,38 @@ class admin_manage(shape):
             pri = qun_price[1]
             print(f"Item_Name ==> {item} Qunatity is: {qun} Price is: {pri}")
 
+    # Admin deleted Items
+    def _deleted_item(self,del_item_name:str):
+        if isinstance (del_item_name,str):
+            item_exit = self.__items_list.get(del_item_name,False)
+            if(item_exit):
+                del self.__items_list[del_item_name]
+                print(f"This item {del_item_name} is removed Successfully")
+            else:
+                print(f"Sorry Sir This item {del_item_name} name are not founded !")
+                return False
+            
+        else:
+            #this part are Igonore not necessary
+            print(f"Place Check Item Name are Only string !")
+  
+        return True
+    
+
     # Admin added employees
     def add_employe(self, emp_name_split:str, emp_mail:str, emp_num:str):
         #Named must be first and last name use
 
+        
+        
         #Duplicated Email Check
         if emp_mail in [e['Email_id'] for e in self.__employe_info.values()]:
             print(f"Error: The email {emp_mail} is already in use.")
-            return "dup_mail"
+            return False
         #Duplicated Number Check
         if emp_num in [p ['Phone_Number'] for p in self.__employe_info.values()]:
             print(f"Error: The employee number {emp_num} is already in use.")
-            return "dup_number"
+            return False
         
         #generate unique id
         def _generate_emp_id(self):
@@ -70,20 +102,12 @@ class admin_manage(shape):
 
         }
         print(f"Employee ID: {emp_id} & name: {emp_name_split} is added Successfully")
+        return True
     
-    # Admin deleted Items
-    def _deleted_item(self,del_item_name:str):
-        if isinstance (del_item_name,str):
-            item_exit = self.__items_list.get(del_item_name,False)
-            if(item_exit):
-                del self.__items_list[del_item_name]
-                print(f"This item {del_item_name} is removed Successfully")
-            else:
-                print(f"Sorry Sir This item {del_item_name} name are not founded !")
-            
-        else:
-            print(f"Place Check Item Name are Only string !")
-            return
+
+
+if __name__ == "__main__":
+    pass
 
 
 
