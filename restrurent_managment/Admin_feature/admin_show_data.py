@@ -53,9 +53,12 @@ def is_valid_mail(email):
     return re.match(email_pattern, email) is not None
 
 #Checking_Valid_Name
-def is_valid_name(user_emp_name):       
-        if (len(user_emp_name)>30):          
-            return False
+def is_valid_name(user_emp_name):
+
+    username_pattern = r'^[a-zA-Z][a-zA-Z_]{2,30}$'
+    return re.match(username_pattern, user_emp_name) is not None
+       
+
 
 
 
@@ -70,6 +73,7 @@ def emp_data_check(user_emp_name:str,user_emp_mail:str,user_emp_Number:str):
          invalid_extra = f"Name Must be Only 30 Character"
          invalid_list.append(invalid_name)
          invalid_list.append(invalid_extra)
+    
 
    
 
