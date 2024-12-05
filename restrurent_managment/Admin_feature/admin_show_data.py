@@ -55,8 +55,20 @@ def is_valid_mail(email):
 #Checking_Valid_Name
 def is_valid_name(user_emp_name):
 
-    username_pattern = r'^[a-zA-Z][a-zA-Z_]{2,30}$'
+    username_pattern = r'^[a-zA-Z][a-zA-Z_]{3,30}$'
     return re.match(username_pattern, user_emp_name) is not None
+
+#Checking_Valid_Number
+import phonenumbers
+def validate_and_format_number(number,default_code="BD"):
+    parse_number = phonenumbers.parse(number,default_code)
+    if phonenumbers.is_valid_number(parse_number):
+        formatted_number = phonenumbers.format_number(parse_number,phonenumbers.PhoneNumberFormat.INTERNATIONAL)
+    else:
+        return False
+
+
+
        
 
 
@@ -68,11 +80,24 @@ def emp_data_check(user_emp_name:str,user_emp_mail:str,user_emp_Number:str):
     if not (is_valid_mail(user_emp_email)):
         invalid_mail = f"This Mail {user_emp_email} is invalid"
         invalid_list.append(invalid_mail)
+
     if not (is_valid_name(user_emp_name)):
          invalid_name = f"This Name {user_emp_name} is Invalid"
          invalid_extra = f"Name Must be Only 30 Character"
          invalid_list.append(invalid_name)
          invalid_list.append(invalid_extra)
+
+    if not(validate_and_format_number(user_emp_Number)):
+        invalid_number = f"This number {user_emp_Number} is Invalid"
+        invalid_list.append(invalid_number)
+    
+    if(len(invalid_list)):
+        for invalid_item in invalid_list:
+            print(invalid_list)
+        return False
+    else:
+        return True
+
     
 
    
@@ -151,17 +176,23 @@ while True:
                 user_emp_Number = str(input()).strip()
 
                 emp_info_checking = emp_data_check(user_emp_name,user_emp_email,user_emp_Number)
-                emp_Duplicate_checking = admin_manage.add_employe(None,user_emp_name,user_emp_email,user_emp_Number)
-
-                if(itemDel_checking):
-                    break
-                else:
-                    
-                    again_check = inside_checking()
-                    if(again_check):
-                        continue
-                    else:
+                
+                if(emp_info_checking):
+                     
+                    emp_Duplicate_checking = admin_manage.add_employe(None,user_emp_name,user_emp_email,user_emp_Number)
+                    if(emp_Duplicate_checking):
                         break
+                    else:
+                    
+                        again_check = inside_checking()
+                        if(again_check):
+                            continue
+                        else:
+                            break
+
+
+                    
+                
 
             print("Enter First Name : ")
             first_name = str(input()).strip()
