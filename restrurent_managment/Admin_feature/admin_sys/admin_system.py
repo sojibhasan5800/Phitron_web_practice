@@ -23,14 +23,19 @@ class admin_manage(shape):
 
     # Admin added new new item in items_list:
     def add_new_item(self, item_name:str, item_quantity:int, item_price:int):
+
         try:
 
-            if isinstance(item_name,str) and isinstance(item_quantity,int) and isinstance(item_price,int):
+            if isinstance(item_name,str) and item_name.isalpha() and isinstance(item_quantity,int) and isinstance(item_price,int):
 
                 new_value_lst=[item_quantity,item_price]
-                self.__items_list[item_name]= self.__items_list.get(item_name,[0]*len(new_value_lst))
-                self.__items_list[item_name]=list(map(lambda x,y : x+y,self.__items_list[item_name],new_value_lst))
+                admin_manage.__items_list[item_name]= admin_manage.__items_list.get(item_name,[0]*len(new_value_lst))
+                admin_manage.__items_list[item_name]=list(map(lambda x,y : x+y,admin_manage.__items_list[item_name],new_value_lst))
                 print(f"item_list {item_name} is added in successfully")
+            else:
+                print("item_name are Invalid Place given Only string Character")
+                return False
+
 
         except Exception as e:
 
@@ -47,19 +52,22 @@ class admin_manage(shape):
     #admin View of this items of list:  
     def view_item(self):
         print("Below this item are Store :")
-        for item,qun_price in self.__items_list.items():
+        for item,qun_price in admin_manage.__items_list.items():
             qun = qun_price[0]
             pri = qun_price[1]
-            print(f"Item_Name ==> {item} Qunatity is: {qun} Price is: {pri}")
+            print(f"Item_Name ==> '{item}' 'Qunatity' is: {qun} 'Price' is: {pri}")
 
     # Admin deleted Items
     def _deleted_item(self,del_item_name:str):
+
         if isinstance (del_item_name,str):
-            item_exit = self.__items_list.get(del_item_name,False)
-            if(item_exit):
+            item_exit = admin_manage.__items_list.get(del_item_name,0)
+        #Problem
+            if(item_exit!=0):
                 del self.__items_list[del_item_name]
                 print(f"This item {del_item_name} is removed Successfully")
             else:
+                print("yes")
                 print(f"Sorry Sir This item {del_item_name} name are not founded !")
                 return False
             

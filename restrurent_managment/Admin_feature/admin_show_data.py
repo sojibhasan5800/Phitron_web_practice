@@ -9,7 +9,8 @@ lst.append(" (1) Add New Items Enter : ")
 lst.append(" (2) View Items Enter    : ")
 lst.append(" (3) Delete Items Enter  : ")
 lst.append(" (4) Add Employees Enter : ")
-lst.append(" (5) Exit Enter          :")
+lst.append(" (5) Back Main Menu      : ")
+lst.append(" (6) Exit Enter          :")
 
 #----------admin_display_fun------------------
 def admin_display_menu():
@@ -68,13 +69,6 @@ def validate_and_format_number(number,default_code="BD"):
         return False
 
 
-
-       
-
-
-
-
-
 def emp_data_check(user_emp_name:str,user_emp_mail:str,user_emp_Number:str):
     invalid_list=[]
     if not (is_valid_mail(user_emp_email)):
@@ -120,8 +114,7 @@ while True:
             while True:
 
                 print("Enter Item Name     :")
-                item_name = str(input())
-                item_name = item_name.strip()
+                item_name = (input()).strip()
                 item_name =" ".join(item_name.split())
                 print("Enter Item_quantity : ")
                 item_qun = int(input()) 
@@ -148,7 +141,7 @@ while True:
             #----------Admin_Delete_items--------------------
             while True:
                  print("Delete Item Name : ")
-                 delete_item_name= str(input())
+                 delete_item_name= str(input()).strip()
 
                  itemDel_checking = admin_manage.delete_item(None,delete_item_name)
                  if(itemDel_checking):
@@ -191,27 +184,19 @@ while True:
                             break
 
 
-                    
-                
-
-            print("Enter First Name : ")
-            first_name = str(input()).strip()
-            print("Enter Last  Name : ")
-            last_name = str(input()).strip()
-            user_emp_name =" ".join((first_name + " "+ last_name).split())
-
-            print("Enter Email  Id  : ")
-            user_emp_email = str(input()).strip()
-
-            print("Enter Phone Number  : ")
-            user_emp_Number = str(input()).strip()
-
-
             
         elif(x==5):
+            #------------back_main_menu----------
             pass
+        elif(x==6):
+            #-----------Exit_Programme------------
+            print("Exiting system. Goodbye!")
+            print(f"-----------------------")
+            break
+            
         
     else:
+        #--------again_run_program
         continue
 
 
