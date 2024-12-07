@@ -26,7 +26,7 @@ def Cheking_User_data(x):
         return False
     elif x.isdigit():
         x = int(x)
-        if not((x>=1 and x<=5)):
+        if not((x>=1 and x<=6)):
             print(f"Place Sir given This Number (1 to 5) are inclusive")
             return False
         else:
@@ -62,6 +62,8 @@ def is_valid_name(user_emp_name):
 #Checking_Valid_Number
 import phonenumbers
 def validate_and_format_number(number,default_code="BD"):
+    if isinstance(number,str):
+        return False
     parse_number = phonenumbers.parse(number,default_code)
     if phonenumbers.is_valid_number(parse_number):
         formatted_number = phonenumbers.format_number(parse_number,phonenumbers.PhoneNumberFormat.INTERNATIONAL)
@@ -87,7 +89,7 @@ def emp_data_check(user_emp_name:str,user_emp_mail:str,user_emp_Number:str):
     
     if(len(invalid_list)):
         for invalid_item in invalid_list:
-            print(invalid_list)
+            print(invalid_item)
         return False
     else:
         return True
@@ -143,10 +145,11 @@ while True:
                  print("Delete Item Name : ")
                  delete_item_name= str(input()).strip()
 
-                 itemDel_checking = admin_manage.delete_item(None,delete_item_name)
+                 itemDel_checking = admin_manage.deleted_item_admin(None,delete_item_name)
                  if(itemDel_checking):
                     break
                  else:
+
                     again_check = inside_checking()
                     if(again_check):
                         continue

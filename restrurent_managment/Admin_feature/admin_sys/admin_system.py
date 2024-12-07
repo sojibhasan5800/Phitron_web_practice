@@ -52,22 +52,26 @@ class admin_manage(shape):
     #admin View of this items of list:  
     def view_item(self):
         print("Below this item are Store :")
+        print("---------------------------")
+        if(len(admin_manage.__items_list)== 0):
+            print("Can not be Store Any items")
+            return
         for item,qun_price in admin_manage.__items_list.items():
             qun = qun_price[0]
             pri = qun_price[1]
             print(f"Item_Name ==> '{item}' 'Qunatity' is: {qun} 'Price' is: {pri}")
 
     # Admin deleted Items
-    def _deleted_item(self,del_item_name:str):
+    def deleted_item_admin(self,del_item_name:str):
 
         if isinstance (del_item_name,str):
-            item_exit = admin_manage.__items_list.get(del_item_name,0)
+            item_exit = admin_manage.__items_list.get(del_item_name,False)
         #Problem
-            if(item_exit!=0):
-                del self.__items_list[del_item_name]
+            if(item_exit):
+                del admin_manage.__items_list[del_item_name]
                 print(f"This item {del_item_name} is removed Successfully")
+                return True
             else:
-                print("yes")
                 print(f"Sorry Sir This item {del_item_name} name are not founded !")
                 return False
             
@@ -76,9 +80,10 @@ class admin_manage(shape):
             print(f"Place Check Item Name are Only string !")
   
         return True
-    
+        
 
     # Admin added employees
+
     def add_employe(self, emp_name_split:str, emp_mail:str, emp_num:str):
         #Named must be first and last name use
 
