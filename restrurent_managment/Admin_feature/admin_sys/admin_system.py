@@ -1,4 +1,10 @@
 import random
+import phonenumbers
+from tabulate import tabulate
+
+import os
+import sys
+
 from abc import ABC,abstractmethod
 # Creater Must be Subclass Under this method Use:
 class shape(ABC):
@@ -90,11 +96,11 @@ class admin_manage(shape):
         
         
         #Duplicated Email Check
-        if emp_mail in [e['Email_id'] for e in self.__employe_info.values()]:
+        if emp_mail in [e['Email_id'] for e in admin_manage.__employe_info.values()]:
             print(f"Error: The email {emp_mail} is already in use.")
             return False
         #Duplicated Number Check
-        if emp_num in [p ['Phone_Number'] for p in self.__employe_info.values()]:
+        if emp_num in [p ['Phone_Number'] for p in admin_manage.__employe_info.values()]:
             print(f"Error: The employee number {emp_num} is already in use.")
             return False
         
@@ -107,16 +113,42 @@ class admin_manage(shape):
                     return un_emp_id
                 
 
-        emp_id = _generate_emp_id()
-        self.__employe_info[emp_id]={
+        emp_id = _generate_emp_id(None)
+        
+        def validate_and_format_number_sys(number,default_code="BD"):
+            parse_number = phonenumbers.parse(number,default_code)
+            if phonenumbers.is_valid_number(parse_number):
+                formatted_number = phonenumbers.format_number(parse_number,phonenumbers.PhoneNumberFormat.INTERNATIONAL)
+                return formatted_number
+                
+         
+               
+        admin_manage.__employe_info[emp_id]={
             "Name": emp_name_split,
             "Email_id":emp_mail,
-            "Phone_Number":emp_num
+            "Phone_Number":validate_and_format_number_sys(emp_num)
 
         }
         print(f"Employee ID: {emp_id} & name: {emp_name_split} is added Successfully")
         return True
     
+    #Admin_View_Employee_list:
+    def view_employee_list(self):
+        if not admin_manage.__employe_info:
+            print("No employee data available.")
+            return
+        headers= ["Employee ID", "Name", "Email", "Phone Number"]
+        table_data=[
+            [key_emp_id, data["Name"], data["Email_id"], data["Phone_Number"]]
+            for key_emp_id,data in admin_manage.__employe_info.items()
+        ]
+        print(tabulate(table_data, headers=headers, tablefmt="double_grid"))
+        return
+    
+
+       
+
+
 
 
 if __name__ == "__main__":

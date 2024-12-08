@@ -1,16 +1,17 @@
 import os
 import sys
 # Ignore this append path because inside of folder data
-#sys.path.append("")
-from admin_sys.admin_system import *
+# sys.path.append( r"E:\CSE\Python\extra\Restrurent_web\restrurent_managment\Admin_feature\admin_sys")
+from admin_sys.admin_system import*
 #---------admin_dispaly_Entry-----------------
 lst=[]
-lst.append(" (1) Add New Items Enter : ")
-lst.append(" (2) View Items Enter    : ")
-lst.append(" (3) Delete Items Enter  : ")
-lst.append(" (4) Add Employees Enter : ")
-lst.append(" (5) Back Main Menu      : ")
-lst.append(" (6) Exit Enter          :")
+lst.append(" (1) Add New Items Enter       : ")
+lst.append(" (2) View Items Enter          : ")
+lst.append(" (3) Delete Items Enter        : ")
+lst.append(" (4) Add Employees Enter       : ")
+lst.append(" (5) View Employees List Enter : ")
+lst.append(" (6) Back Main Menu            : ")
+lst.append(" (7) Exit Enter                : ")
 
 #----------admin_display_fun------------------
 def admin_display_menu():
@@ -56,20 +57,22 @@ def is_valid_mail(email):
 #Checking_Valid_Name
 def is_valid_name(user_emp_name):
 
-    username_pattern = r'^[a-zA-Z][a-zA-Z_]{3,30}$'
+    username_pattern = r'^[a-zA-Z][a-zA-Z\s]{2,29}$'
     return re.match(username_pattern, user_emp_name) is not None
 
 #Checking_Valid_Number
 import phonenumbers
 def validate_and_format_number(number,default_code="BD"):
-    if isinstance(number,str):
+    try:
+        parse_number = phonenumbers.parse(number,default_code)
+        if phonenumbers.is_valid_number(parse_number):
+            formatted_number = phonenumbers.format_number(parse_number,phonenumbers.PhoneNumberFormat.INTERNATIONAL)
+            return formatted_number
+        else:
+         return False
+    except phonenumbers.NumberParseException:
         return False
-    parse_number = phonenumbers.parse(number,default_code)
-    if phonenumbers.is_valid_number(parse_number):
-        formatted_number = phonenumbers.format_number(parse_number,phonenumbers.PhoneNumberFormat.INTERNATIONAL)
-    else:
-        return False
-
+        
 
 def emp_data_check(user_emp_name:str,user_emp_mail:str,user_emp_Number:str):
     invalid_list=[]
@@ -163,7 +166,7 @@ while True:
                 first_name = str(input()).strip()
                 print("Enter Last  Name : ")
                 last_name = str(input()).strip()
-                user_emp_name =" ".join((first_name + " "+ last_name).split())
+                user_emp_name ="".join((first_name + " "+ last_name))
 
                 print("Enter Email  Id  : ")
                 user_emp_email = str(input()).strip()
@@ -173,25 +176,23 @@ while True:
 
                 emp_info_checking = emp_data_check(user_emp_name,user_emp_email,user_emp_Number)
                 
-                if(emp_info_checking):
+                if(emp_info_checking and admin_manage.add_employe(None,user_emp_name,user_emp_email,user_emp_Number)):
                      
-                    emp_Duplicate_checking = admin_manage.add_employe(None,user_emp_name,user_emp_email,user_emp_Number)
-                    if(emp_Duplicate_checking):
-                        break
+                    break
+                else:
+                    again_check = inside_checking()
+                    if(again_check):
+                        continue
                     else:
-                    
-                        again_check = inside_checking()
-                        if(again_check):
-                            continue
-                        else:
-                            break
-
-
-            
+                        break
         elif(x==5):
+            #-----------view_emp_list-----------
+            admin_manage.view_employee_list(None)
+            
+        elif(x==6):
             #------------back_main_menu----------
             pass
-        elif(x==6):
+        elif(x==7):
             #-----------Exit_Programme------------
             print("Exiting system. Goodbye!")
             print(f"-----------------------")
