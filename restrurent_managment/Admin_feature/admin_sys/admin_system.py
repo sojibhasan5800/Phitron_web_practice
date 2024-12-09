@@ -59,13 +59,17 @@ class admin_manage(shape):
     def view_item(self):
         print("Below this item are Store :")
         print("---------------------------")
-        if(len(admin_manage.__items_list)== 0):
+        if not admin_manage.__items_list:
             print("Can not be Store Any items")
             return
-        for item,qun_price in admin_manage.__items_list.items():
-            qun = qun_price[0]
-            pri = qun_price[1]
-            print(f"Item_Name ==> '{item}' 'Qunatity' is: {qun} 'Price' is: {pri}")
+        
+        view_item_table =[" Item_Name "," Quantity ", " Price "]
+        table_item_data =[
+            [item,qun_price[0],qun_price[1]]
+            for item,qun_price in admin_manage.__items_list.items()
+        ]
+        print(tabulate(table_item_data,headers=view_item_table,tablefmt="grid"
+                       , stralign="center", numalign="center"))
 
     # Admin deleted Items
     def deleted_item_admin(self,del_item_name:str):
@@ -142,7 +146,8 @@ class admin_manage(shape):
             [key_emp_id, data["Name"], data["Email_id"], data["Phone_Number"]]
             for key_emp_id,data in admin_manage.__employe_info.items()
         ]
-        print(tabulate(table_data, headers=headers, tablefmt="double_grid"))
+        print(tabulate(table_data, headers=headers, tablefmt="double_grid",
+                        stralign="center", numalign="center"))
         return
     
 

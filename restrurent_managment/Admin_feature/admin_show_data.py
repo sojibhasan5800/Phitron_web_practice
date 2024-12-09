@@ -27,7 +27,7 @@ def Cheking_User_data(x):
         return False
     elif x.isdigit():
         x = int(x)
-        if not((x>=1 and x<=6)):
+        if not((x>=1 and x<=7)):
             print(f"Place Sir given This Number (1 to 5) are inclusive")
             return False
         else:
@@ -57,7 +57,7 @@ def is_valid_mail(email):
 #Checking_Valid_Name
 def is_valid_name(user_emp_name):
 
-    username_pattern = r'^[a-zA-Z][a-zA-Z\s]{2,29}$'
+    username_pattern = r'^[a-zA-Z][a-zA-Z\s]{3,29}$'
     return re.match(username_pattern, user_emp_name) is not None
 
 #Checking_Valid_Number
@@ -82,7 +82,7 @@ def emp_data_check(user_emp_name:str,user_emp_mail:str,user_emp_Number:str):
 
     if not (is_valid_name(user_emp_name)):
          invalid_name = f"This Name {user_emp_name} is Invalid"
-         invalid_extra = f"Name Must be Only 30 Character"
+         invalid_extra = f"Name Must be Only (4 to 30) Character Between"
          invalid_list.append(invalid_name)
          invalid_list.append(invalid_extra)
 
