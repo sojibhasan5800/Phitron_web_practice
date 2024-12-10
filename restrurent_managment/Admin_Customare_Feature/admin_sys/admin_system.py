@@ -1,9 +1,8 @@
 import random
 import phonenumbers
 from tabulate import tabulate
-
-import os
-import sys
+def call():
+    print("he")
 
 from abc import ABC,abstractmethod
 # Creater Must be Subclass Under this method Use:

@@ -3,6 +3,7 @@ import sys
 # Ignore this append path because inside of folder data
 # sys.path.append( r"E:\CSE\Python\extra\Restrurent_web\restrurent_managment\Admin_feature\admin_sys")
 from admin_sys.admin_system import*
+
 #---------admin_dispaly_Entry-----------------
 lst=[]
 lst.append(" (1) Add New Items Enter       : ")
