@@ -5,19 +5,19 @@ import sys
 from admin_sys.admin_system import*
 
 #---------admin_dispaly_Entry-----------------
-lst=[]
-lst.append(" (1) Add New Items Enter       : ")
-lst.append(" (2) View Items Enter          : ")
-lst.append(" (3) Delete Items Enter        : ")
-lst.append(" (4) Add Employees Enter       : ")
-lst.append(" (5) View Employees List Enter : ")
-lst.append(" (6) Back Main Menu            : ")
-lst.append(" (7) Exit Enter                : ")
+admin_dis_list=[]
+admin_dis_list.append(" (1) Add New Items Enter       : ")
+admin_dis_list.append(" (2) View Items Enter          : ")
+admin_dis_list.append(" (3) Delete Items Enter        : ")
+admin_dis_list.append(" (4) Add Employees Enter       : ")
+admin_dis_list.append(" (5) View Employees List Enter : ")
+admin_dis_list.append(" (6) Back Main Menu            : ")
+admin_dis_list.append(" (7) Exit Enter                : ")
 
 #----------admin_display_fun------------------
 def admin_display_menu():
-    for view_menu_lst in lst:
-        print(view_menu_lst)
+    for view_menu_admin_dis_list in admin_dis_list:
+        print(view_menu_admin_dis_list)
 
 #----------------------- User Given Data Checking ----------------------------------
 
@@ -29,7 +29,7 @@ def Cheking_User_data(x):
     elif x.isdigit():
         x = int(x)
         if not((x>=1 and x<=7)):
-            print(f"Place Sir given This Number (1 to 5) are inclusive")
+            print(f"Place Sir given This Number (1 to 7) are inclusive")
             return False
         else:
             return True
@@ -204,6 +204,12 @@ while True:
         #--------again_run_program
         continue
 
+# customer_service_part
+
+def customer_view_items():
+    admin_manage.view_item(None)
+def customer_buy_items(customer_item_name,customer_items_quan):
+    
 
 
 
