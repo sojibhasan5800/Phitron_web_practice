@@ -149,25 +149,51 @@ class admin_manage(shape):
         return
     
     #Customer_view_item_aviable
-    def customer_check_avaiable_item(self,cus_item_name,cus_item_quan):
-        item_not_avaiable_list=[]
-        item_added_list=[]
-        
-        check_avle_item = admin_manage.__items_list.get(cus_item_name,False)
-        if(check_avle_item):
-            store_quantity = admin_manage.__items_list[cus_item_name][0]
-            if(store_quantity>=cus_item_quan):
-                return True
-            else:
-                no_quantity=f"This '{cus_item_name}' item are not enough '{store_quantity}' quantity in our Store !"
-                ava_quantity=f"This '{cus_item_name}' item are avaiable  quantity is ==> '{store_quantity}'"
-                item_not_avaiable_list.append(no_quantity)
-                item_not_avaiable_list.append(ava_quantity)
+    def customer_check_avaiable_item(self,cus_card_lst:dict):
+        item_not_avaiable_list={}
+        item_added_list={}
+        not_enough_quantity={}
 
-        else:
-            no_item=f"This '{cus_item_name}' item are not founded in our Store !"
-            item_not_avaiable_list.append(no_item)
-        return
+        for cus_item_name,cus_item_quan in cus_card_lst.items():
+             check_avle_item = admin_manage.__items_list.get(cus_item_name,False)
+             if(check_avle_item):
+                store_quantity = admin_manage.__items_list[cus_item_name][0]
+                if(store_quantity>=cus_item_quan):
+                    item_added_list[cus_item_name]=cus_item_quan
+                else:
+                    #  no_quantity=f"This '{cus_item_name}' item are not enough '{store_quantity}' quantity in our Store !"
+                    #  ava_quantity=f"This '{cus_item_name}' item are avaiable  quantity is ==> '{store_quantity}'"
+                    #  item_not_avaiable_list.append(no_quantity)
+                    #  item_not_avaiable_list.append(ava_quantity)
+                    not_enough_quantity[cus_item_name]=cus_item_quan
+             else:
+                #  no_item=f"This '{cus_item_name}' item are not founded in our Store !"
+                #  item_not_avaiable_list.append(no_item)
+                item_not_avaiable_list[cus_item_name]=cus_item_quan
+
+            
+                 
+            
+                
+
+
+                
+
+
+            
+        
+       
+        
+            
+            
+               
+
+   
+        
+
+def customer_buy_items(cus_card_lst:dict):
+    admin_manage.customer_check_avaiable_item(None,cus_card_lst:dict)
+
 
     
 

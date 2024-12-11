@@ -19,17 +19,20 @@ def admin_display_menu():
     for view_menu_admin_dis_list in admin_dis_list:
         print(view_menu_admin_dis_list)
 
-#----------------------- User Given Data Checking ----------------------------------
+#----------------------- Admin Given Data Checking ----------------------------------
 
 #checking_input_comment
-def Cheking_User_data(x):
+def Cheking_User_data(x,users):
     if  x.isalpha():
         print(f"This {x} is alpha Character Place given integer Number !")
         return False
     elif x.isdigit():
         x = int(x)
-        if not((x>=1 and x<=7)):
+        if ( users=="Admin" and ( x<1 or x>7)  ):
             print(f"Place Sir given This Number (1 to 7) are inclusive")
+            return False
+        elif(users=="customer" and ( x<1 or x>6) ):
+            print(f"Place Sir given This Number (1 to 6) are inclusive")
             return False
         else:
             return True
@@ -38,10 +41,17 @@ def Cheking_User_data(x):
         return False
     
 #Checking_inside_input_comment
-def inside_checking():
-     
-     print("If you again item  add  Press (1) :")
-     print("Otherwise you exit then Press (0) :")
+def inside_checking(users_check="Admin"):
+     if(users_check=="Again_add_card"):
+         print("If you more Items Added In Card Press (1) :")
+         print("If you not  Items Added In Card Press (0) :")
+     elif(users_check=="Invalid_promt"):
+         print("If you again Added Item  press     (1): ")
+         print("If you  Not again Added Item press (0): ")
+     elif(users_check=="Admin"):
+         print("If you again item  add  Press (1) :")
+         print("Otherwise you exit then Press (0) :")
+           
      again_input = input()
      if(again_input=="1"):
          return True
@@ -113,7 +123,7 @@ while True:
     print()
     admin_display_menu()
     x = input()
-    if(Cheking_User_data(x)):
+    if(Cheking_User_data(x,"Admin")):
         x = int(x)
         if(x==1):
             # ---------Admin add New Items-----------
@@ -121,7 +131,7 @@ while True:
 
                 print("Enter Item Name     :")
                 item_name = (input()).strip()
-                item_name =" ".join(item_name.split())
+                item_name = re.sub(r'\s{2,}',' ',item_name)
                 print("Enter Item_quantity : ")
                 item_qun = int(input()) 
                 print("Enter Per_kg Price  :")
@@ -148,6 +158,7 @@ while True:
             while True:
                  print("Delete Item Name : ")
                  delete_item_name= str(input()).strip()
+                 delete_item_name =re.sub(r'\s{2,}', ' ', delete_item_name)
 
                  itemDel_checking = admin_manage.deleted_item_admin(None,delete_item_name)
                  if(itemDel_checking):
@@ -168,6 +179,7 @@ while True:
                 print("Enter Last  Name : ")
                 last_name = str(input()).strip()
                 user_emp_name ="".join((first_name + " "+ last_name))
+                user_emp_name=re.sub(r'\s{2,}',' ',user_emp_name)
 
                 print("Enter Email  Id  : ")
                 user_emp_email = str(input()).strip()
@@ -208,7 +220,7 @@ while True:
 
 def customer_view_items():
     admin_manage.view_item(None)
-def customer_buy_items(customer_item_name,customer_items_quan):
+
     
 
 
