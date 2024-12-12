@@ -10,10 +10,14 @@ class forces(ABC):
     @abstractmethod
     def add_item_card(self,cus_item_name,cus_item_qun):
         pass
+    @abstractmethod
     def customer_view_card(self):
         pass
+    @abstractmethod
     def pay_bill(self,cus_amount):
         pass
+    
+
 
 #connection Another File
 import os
@@ -21,7 +25,7 @@ import sys
 
 from admin_show_data import customer_view_items
 from admin_show_data import customer_buy_items
-from admin_sys.admin_system import cus
+from admin_sys.admin_system import customer_buy_items
 import re
     
 # Devloper Function Created:
@@ -30,31 +34,36 @@ class customer_manage(forces):
     
     def __init__(self):
         self.__cart=[]
-        self.__invalid_cart=[]
+        self.__cus_own_price = 0
 
     def view_menu(self):
         customer_view_items()
     
+    @property
     def add_item_card(self,cus_card_lst:dict):
-
-        = 
-        for key,value in cus_card_lst.items():
-
-
         pass
+
+    @add_item_card.setter
+    def add_item_card(self,cus_card_lst:dict):
+        user_store_card,total_price = customer_buy_items(cus_card_lst)
+        self.__cart.append(user_store_card)
+        self.__cus_own_price=total_price
+        
     def customer_view_card(self):
-        pass
+        for card_table in self.__cart:
+            print(card_table)
+
     def pay_bill(self,cus_amount):
         pass
 
 #---------admin_dispaly_Entry-----------------
 customer_dis_lst=[]
 customer_dis_lst.append(" (1) View Items Menu  Enter       : ")
-customer_dis_lst.append(" (2) Add  Items Enter          : ")
-customer_dis_lst.append(" (3) View Card Enter        : ")
-customer_dis_lst.append(" (4) Pay Bill Enter       : ")
-customer_dis_lst.append(" (5) Back Main Menu            : ")
-customer_dis_lst.append(" (6) Exit Enter                : ")
+customer_dis_lst.append(" (2) Add  Items Enter             : ")
+customer_dis_lst.append(" (3) View Card Enter              : ")
+customer_dis_lst.append(" (4) Pay Bill Enter               : ")
+customer_dis_lst.append(" (5) Back Main Menu               : ")
+customer_dis_lst.append(" (6) Exit Enter                   : ")
 
 #----------admin_display_fun------------------
 def customer_display_menu():
@@ -123,16 +132,21 @@ while True:
 
             
         elif(x==3):
-            # ---------Admin add New Items-----------
+            # --------- Customer Check view Card-----------
+            customer_manage.customer_view_card()
             pass
         elif(x==4):
-            # ---------Admin add New Items-----------
+            # ---------Customer Amount Pay of His card-----------
+
             pass
         elif(x==5):
-            # ---------Admin add New Items-----------
+            # ---------Customer Back Main Menu -----------
             pass
         elif(x==6):
-            # ---------Admin add New Items-----------
+             #-----------Exit_Programme------------
+            print("Exiting system. Goodbye!")
+            print(f"-----------------------")
+            break
             pass
 
     else:

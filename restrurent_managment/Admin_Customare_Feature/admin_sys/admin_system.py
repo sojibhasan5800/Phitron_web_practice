@@ -150,9 +150,14 @@ class admin_manage(shape):
     
     #Customer_view_item_aviable
     def customer_check_avaiable_item(self,cus_card_lst:dict):
-        item_not_avaiable_list={}
+        # Wroking desgin are more
+
         item_added_list={}
         not_enough_quantity={}
+        item_not_avaiable_list={}
+
+        cus_tab_headers= ["Items_Name", "Quantity", "Price"]
+        cus_table_data=[]
 
         for cus_item_name,cus_item_quan in cus_card_lst.items():
              check_avle_item = admin_manage.__items_list.get(cus_item_name,False)
@@ -161,15 +166,48 @@ class admin_manage(shape):
                 if(store_quantity>=cus_item_quan):
                     item_added_list[cus_item_name]=cus_item_quan
                 else:
-                    #  no_quantity=f"This '{cus_item_name}' item are not enough '{store_quantity}' quantity in our Store !"
-                    #  ava_quantity=f"This '{cus_item_name}' item are avaiable  quantity is ==> '{store_quantity}'"
-                    #  item_not_avaiable_list.append(no_quantity)
-                    #  item_not_avaiable_list.append(ava_quantity)
+                    
                     not_enough_quantity[cus_item_name]=cus_item_quan
              else:
-                #  no_item=f"This '{cus_item_name}' item are not founded in our Store !"
-                #  item_not_avaiable_list.append(no_item)
+               
                 item_not_avaiable_list[cus_item_name]=cus_item_quan
+
+        customer_total_price=0
+        if item_added_list:
+            for item_name,item_quantity in item_added_list.items():
+                item_names=item_name
+                item_quantitys = item_quantity
+                item_price =(item_quantity*admin_manage.__items_list[item_name][1])
+                customer_total_price+=item_price
+                cus_table_data.append([item_names,item_quantitys,item_price])
+
+
+
+            
+        if not_enough_quantity:
+            for item_name,item_quantity in not_enough_quantity.items():
+                item_names= item_name
+                item_quantitys = "Not Enough Quantity"
+                item_price="--"
+                cus_table_data.append([item_names,item_quantitys,item_price])
+            
+                                  
+                                  
+        if item_not_avaiable_list:
+            for item_name,item_quantity in not_enough_quantity.items():
+                item_names= f"{item_name} not Founded"
+                item_quantitys = "None"
+                item_price="--"
+                cus_table_data.append([item_names,item_quantitys,item_price])
+            
+        cus_table_data.append(["Total Sum","-------------->",customer_total_price])
+        cus_card_table = tabulate(cus_table_data,headers=cus_tab_headers,
+                                  tablefmt="double_grid", stralign="center",
+                                  numalign="center"
+                                 )
+        return cus_card_table,customer_total_price
+           
+        
 
             
                  
@@ -192,7 +230,8 @@ class admin_manage(shape):
         
 
 def customer_buy_items(cus_card_lst:dict):
-    admin_manage.customer_check_avaiable_item(None,cus_card_lst:dict)
+     return admin_manage.customer_check_avaiable_item(None,cus_card_lst)
+
 
 
     
