@@ -26,6 +26,18 @@ class common_data_get:
                         common_data_get.teacher_id_number.add(person_id)
                         return person_id
                     
+    def daily_subjects(self,class_name):
+    # Dictionary to store subjects for each class
+        class_subjects = {
+            "Six": ["Math", "Science", "English", "History"],
+            "Seven": ["Math", "Biology", "English", "Geography"],
+            "Eight": ["Math", "Physics", "English", "Civics"],
+            "Nine": ["Advanced Math", "Chemistry", "English", "Economics"],
+            "Ten": ["Advanced Math", "Physics", "English", "Accounting"]
+        }
+        
+        return class_subjects[class_name]
+                    
 
 
 # send data :
@@ -35,6 +47,10 @@ def recive_id_teacher():
 def recive_id_student():
      id_number = common_data_get._generate_id(None,"student")
      return id_number
+def recive_sub_list(class_name):
+     sub_list=common_data_get.daily_subjects(None,class_name)
+     return sub_list
+     
                   
 
            
