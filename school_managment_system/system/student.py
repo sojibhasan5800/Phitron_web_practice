@@ -28,20 +28,33 @@ class Student(Studnets_Shape):
         self.student_names =  Person(student_name)
         self.classrooms = classroom_obj
         self.__student_id= None
+        self.__student_roll =None
         self.student_mark={}
         self.student_sub_grade={}
         self.final_grade=None
 
     
     def calculate_final_grade(self):
-        #WK
-        pass
+        sum=0
+        for grade in self.student_sub_grade.values():
+            point = School.grade_to_value(grade)
+            sum+=point
+        if sum==0:
+            gpa=0.00
+            self.final_grade='F'
+        else:
+            gpa = sum / len(self.student_sub_grade)
+            self.final_grade = School.value_to_grade(gpa)
+        return f"{self.student_names} Final Grade : {self.final_grade} with GPA = {gpa}"
+        
+    def set_student_id(self):
+        self.__student_id =  recive_id_student()
     @property
-    def get_student_id(self):
+    def get_student_roll(self):
         return self.__student_id
-    @get_student_id.setter
-    def get_student_id(self):
-        self.__student_id= recive_id_student()
+    @get_student_roll.setter
+    def get_student_roll(self,roll_no):
+        self.__student_roll= roll_no
 
     
     

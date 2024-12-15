@@ -23,10 +23,10 @@ class Teachers(Teachers_Shape):
         self.teacher_teaches_sub=[]
         self.teacher_id = recive_id_teacher()
     def teach(self,*sub):
-        #Not working
+        
         for subject in sub:
             self.teacher_teaches_sub.append(subject)
-        pass
+        
     def evaluate_exam(self):
         get_random_subMark = random.randint(30,100)
         return get_random_subMark
