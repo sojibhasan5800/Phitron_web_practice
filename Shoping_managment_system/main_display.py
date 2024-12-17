@@ -30,9 +30,10 @@ while True:
         if(x==1):
             #-----------Customer_Registration-----------
             while True:
-                
-                if(reg_display_from()):
-                    print("Dear --Name-- Regsitration is Successfully")
+                result,user_id,user_cus_name =reg_display_from()
+                if(result):
+                    print(f"Dear {user_cus_name} Regsitration is Successfully")
+                    print(f"Your Account Id: {user_id}")
                     break
                 else:
                     if(inside_checking()):
