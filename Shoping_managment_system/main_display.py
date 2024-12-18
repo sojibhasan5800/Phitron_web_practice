@@ -3,7 +3,7 @@ import re
 import os
 import sys
 from valid_check_sys.valid_data import Cheking_User_data,inside_checking
-from Registration_from.reg import reg_display_from
+from Registration_from.reg import reg_display_from,login_display_from
 
 #---------Users_dispaly_Entry-----------------
 main_lst=[]
@@ -30,11 +30,11 @@ while True:
         if(x==1):
             #-----------Customer_Registration-----------
             while True:
-                result,user_id,user_cus_name =reg_display_from()
+                result,user_id,user_cus_name =reg_display_from("Customer")
                 if(result):
                     print(f"Dear {user_cus_name} Regsitration is Successfully")
                     print(f"Your Account Id: {user_id}")
-                    break
+                    continue
                 else:
                     if(inside_checking()):
                         continue
@@ -44,10 +44,32 @@ while True:
 
         elif(x==2):
              #-----------Seller_Registration-----------
-            pass
+            result,user_id,user_cus_name =reg_display_from("Seller")
+            if(result):
+                    print(f"Dear {user_cus_name} Regsitration is Successfully")
+                    print(f"Your Account Id: {user_id}")
+                    continue
+            else:
+                if(inside_checking()):
+                    continue
+                else:
+                    break    
+            
         elif(x==3):
              #-----------User_Login-----------
-            pass
+            result,user_id,users = login_display_from()
+            if(result):
+                f"Login successful for user ID: {user_id}"
+                if(users=="Seller"):
+                    pass
+                elif(users=="Customer"):
+                    pass
+            else:
+                print("Invalid email or password")
+                continue
+            
+                 
+            
         elif(x==4):
             #-----------Exit_Programme------------
             print("Exiting system. Goodbye!")

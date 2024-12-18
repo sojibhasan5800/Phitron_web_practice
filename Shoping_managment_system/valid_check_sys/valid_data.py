@@ -9,8 +9,8 @@ def Cheking_User_data(x,users):
         if ( users=="Registration" and ( x<1 or x>4)  ):
             print(f"Place Sir given This Number (1 to 4) are inclusive")
             return False
-        elif(users=="customer" and ( x<1 or x>6) ):
-            print(f"Place Sir given This Number (1 to 6) are inclusive")
+        elif(users=="Admin" and ( x<1 or x>7) ):
+            print(f"Place Sir given This Number (1 to 7) are inclusive")
             return False
         else:
             return True
@@ -48,7 +48,7 @@ def validate_and_format_number(number,default_code="BD"):
 #Checking_Strong_Password
 def is_strong_password(password):
     """Check if the password is strong (minimum 8 characters, includes uppercase, lowercase, number, and special character)."""
-    pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}$'
+    pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&><])[A-Za-z\d@$!%*?&><]{8,30}$'
     return re.match(pattern, password) is not None
        
 
