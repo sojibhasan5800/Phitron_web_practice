@@ -1,11 +1,11 @@
 #-------------Connection_System---------------
 import os
 import sys
-
+from tabulate import tabulate
 
 class Store_manager:
-    __items_list={}
-    __our_store ={}
+    __items_list={} # key :shop_id, key_value:item_name,key:item_name, value: list
+    __our_store ={} # key :shop_id, value: shop_obj
 
     def __init__(self,shop_name):
         self.__shop_name = shop_name
@@ -15,7 +15,7 @@ class Store_manager:
     #Store Info add:
     def add_our_store_info(self,shop_id):
         self.__shop_id= shop_id
-        self.__our_store[shop_id]=self.__shop_name
+        self.__our_store[shop_id]=self
 
     # Admin added new new item in items_list:
     def add_new_item(self, item_name:str, item_quantity:int, item_price:int):
@@ -24,7 +24,7 @@ class Store_manager:
         if self.__shop_id not in self.__items_list.keys():
             self.__items_list[self.__shop_id]={}
 
-        if item_name  in self.__items_list[self.__shop_id]:
+        if item_name  in self.__items_list[self.__shop_id].keys():
             self.__items_list[self.__shop_id][item_name][0]+= item_quantity 
         else:
             self.__items_list[self.__shop_id][item_name]=[item_quantity,item_price]   
@@ -49,18 +49,82 @@ class Store_manager:
             return False
         
         del self.__items_list[shop_id][del_item_name]
-        del self.__our_store[del_item_name]
+        shop_obj = self.__our_store[shop_id]
+        del shop_obj.__shop_store[del_item_name]
         print(f"This item {del_item_name} is removed Successfully")
         return True
    
         
     # Admin_auto_deleted Items
-    def admin_auto_deleted_item(self,shop_id:int,buy_item_name:str, quantity:int):
+    def admin_sell_decrease_item(self,shop_id:int,buy_item_name:str, buy_quantity:int):
         
-        self.__items_list[shop_id][buy_item_name][0]-=quantity
+        # Check if the item quantity exists in the shop
+        if self.__items_list[shop_id][buy_item_name][0]< buy_quantity:
+            print(f"Not enough stock or item '{buy_item_name}' does not exist.")
+            return False
         
-    
+        # Decrease quantity in shop_store
+        shop_obj = self.__our_store[shop_id]
+        shop_obj.__shop_store[buy_item_name][0]-=buy_quantity
+        if shop_obj.__shop_store[buy_item_name][0]==0:
+            del shop_obj.__shop_store[buy_item_name]
 
+        # Decrease quantity in items_list
+        self.__items_list[shop_id][buy_item_name][0]-=buy_quantity
+        if self.__items_list[shop_id][buy_item_name][0]==0:
+            del self.__items_list[shop_id][buy_item_name]
+        
+    # Admin_display_view_items_all_shop
+    # Admin_display_view_items_our_Store
+    def store_view_item(self):
+        if not self.__items_list:
+            print("No items available in the store.")
+            return True
+
+        # Iterate over all the shops and display their items in a formatted table
+        for shop_id, item_name in self.__items_list.items():
+            # Display the Shop ID
+            print(f"Shop ID: {shop_id}")
+            print("+-----------+-----------+-------+")
+            print("| Item Name | Quantity  | Price |")
+            print("+===========+===========+=======+")
+            
+            # Prepare data for each shop
+            table_data = []
+            for item, (quantity, price) in item_name.items():
+                table_data.append([item, quantity, price])
+
+            # Display the items in a table
+            for row in table_data:
+                print(f"| {row[0]:<10} | {row[1]:<9} | {row[2]:<5} |")
+            print("+-----------+-----------+-------+")
+            print("")  # Empty line for separation between shops
+
+        return True
+
+    # Admin_display_view_items_our_Store
+    def our_store_view_item(self,shop_id):
+        if shop_id not in self.__our_store:
+            print(f"This Shop_id '{shop_id}' do not match anyone try again !!")
+            return False
+        
+        print(f"Shop Name is : '{self.__our_store[shop_id].__shop_name}' and id is : '{shop_id}'")
+        if not self.__our_store[shop_id].__shop_store:
+            print("No items available in the store.")
+            return True
+
+        # Create table data
+        table_data = []
+        shop_obj = self.__our_store[shop_id]
+        for  item_name,value in shop_obj.__shop_store.items():
+            quantity = value[0]
+            price = value[1]
+            table_data.append([item_name, quantity, price])
+
+        # Display table using tabulate
+        headers = ["Item Name", "Quantity", "Price"]
+        print(tabulate(table_data, headers=headers, tablefmt="grid", colalign=("center", "center", "center")))
+        return True
 
        
             
@@ -76,12 +140,31 @@ class Store_manager:
 def create_shop(shop_name,shop_id):
     shop = Store_manager(shop_name)
     shop.add_our_store_info(shop_id)
+    return shop
 
 #-------------- main_function ----------------------------------
-shop = Store_manager("hi")
-shop.add_our_store_info(20)
-shop.add_new_item("alo",20,10)
-shop.add_new_item("alo",60,90)
+shop1 = create_shop("Shop1", 1)
+shop2 = create_shop("Shop2", 2)
+shop3= create_shop("ss",50)
+
+
+# Adding items
+shop1.add_new_item("Potato", 100, 5)
+shop1.add_new_item("Onion", 50, 10)
+shop3.add_new_item("alo",30,5)
+
+# Selling items
+shop1.admin_sell_decrease_item(1,"Potato", 20)
+shop1.admin_sell_decrease_item(1,"Potato", 20)
+shop3.admin_sell_decrease_item(50,"alo", 60)
+
+shop1.store_view_item()
+shop1.our_store_view_item(1)
+
+
+
+
+
 
 
 
