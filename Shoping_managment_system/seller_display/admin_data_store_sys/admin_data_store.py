@@ -37,6 +37,57 @@ class Store_manager:
 
         print(f"Item '{item_name}' is added successfully with quantity {item_quantity} and price {item_price}.")
     
+    # Admin_display_view_items_All_Store
+    def store_view_item(self):
+        if not self.__items_list:
+            print("No items available in the store.")
+            return True
+
+        # Iterate over all the shops and display their items in a formatted table
+        for shop_id, item_name in self.__items_list.items():
+            # Display the Shop ID
+            print(f"Shop Name is : '{self.__our_store[shop_id].__shop_name}' and id is : '{shop_id}'")
+            print("+-----------+-----------+-------+")
+            print("| Item Name | Quantity  | Price |")
+            print("+===========+===========+=======+")
+            
+            # Prepare data for each shop
+            table_data = []
+            for item, (quantity, price) in item_name.items():
+                table_data.append([item, quantity, price])
+
+            # Display the items in a table
+            for row in table_data:
+                print(f"| {row[0]:<10} | {row[1]:<9} | {row[2]:<5} |")
+            print("+-----------+-----------+-------+")
+            print("")  # Empty line for separation between shops
+
+        return True
+
+     # Admin_display_view_items_our_Store
+    def our_store_view_item(self,shop_id):
+        if shop_id not in self.__our_store:
+            print(f"This Shop_id '{shop_id}' do not match anyone try again !!")
+            return False
+        
+        print(f"Shop Name is : '{self.__our_store[shop_id].__shop_name}' and id is : '{shop_id}'")
+        if not self.__our_store[shop_id].__shop_store:
+            print("No items available in the store.")
+            return True
+
+        # Create table data
+        table_data = []
+        shop_obj = self.__our_store[shop_id]
+        for  item_name,value in shop_obj.__shop_store.items():
+            quantity = value[0]
+            price = value[1]
+            table_data.append([item_name, quantity, price])
+
+        # Display table using tabulate
+        headers = ["Item Name", "Quantity", "Price"]
+        print(tabulate(table_data, headers=headers, tablefmt="grid", colalign=("center", "center", "center")))
+        return True
+    
     # Admin_Users deleted Items
     def admin_userRequested_deleted_item(self,shop_id:int,del_item_name:str):
 
@@ -74,57 +125,18 @@ class Store_manager:
         if self.__items_list[shop_id][buy_item_name][0]==0:
             del self.__items_list[shop_id][buy_item_name]
         
-    # Admin_display_view_items_all_shop
-    # Admin_display_view_items_our_Store
-    def store_view_item(self):
-        if not self.__items_list:
-            print("No items available in the store.")
-            return True
-
-        # Iterate over all the shops and display their items in a formatted table
-        for shop_id, item_name in self.__items_list.items():
-            # Display the Shop ID
-            print(f"Shop ID: {shop_id}")
-            print("+-----------+-----------+-------+")
-            print("| Item Name | Quantity  | Price |")
-            print("+===========+===========+=======+")
-            
-            # Prepare data for each shop
-            table_data = []
-            for item, (quantity, price) in item_name.items():
-                table_data.append([item, quantity, price])
-
-            # Display the items in a table
-            for row in table_data:
-                print(f"| {row[0]:<10} | {row[1]:<9} | {row[2]:<5} |")
-            print("+-----------+-----------+-------+")
-            print("")  # Empty line for separation between shops
-
-        return True
-
-    # Admin_display_view_items_our_Store
-    def our_store_view_item(self,shop_id):
-        if shop_id not in self.__our_store:
-            print(f"This Shop_id '{shop_id}' do not match anyone try again !!")
-            return False
-        
-        print(f"Shop Name is : '{self.__our_store[shop_id].__shop_name}' and id is : '{shop_id}'")
-        if not self.__our_store[shop_id].__shop_store:
-            print("No items available in the store.")
-            return True
-
-        # Create table data
-        table_data = []
-        shop_obj = self.__our_store[shop_id]
-        for  item_name,value in shop_obj.__shop_store.items():
-            quantity = value[0]
-            price = value[1]
-            table_data.append([item_name, quantity, price])
-
-        # Display table using tabulate
-        headers = ["Item Name", "Quantity", "Price"]
-        print(tabulate(table_data, headers=headers, tablefmt="grid", colalign=("center", "center", "center")))
-        return True
+    # Admin_Item_price_exchange
+    def admin_exchnage_price(self,shop_id:int,item_name:str,ex_item_price:int,exchange_type:str):
+        if(exchange_type=="+"):
+            shop_obj = self.__our_store[shop_id]
+            shop_obj.__shop_store[item_name][1]+=ex_item_price
+            self.__items_list[shop_id][item_name][1]+=ex_item_price
+        elif(exchange_type=='-'):
+            shop_obj = self.__our_store[shop_id]
+            shop_obj.__shop_store[item_name][1]-=ex_item_price
+            self.__items_list[shop_id][item_name][1]-=ex_item_price
+    
+   
 
        
             

@@ -8,13 +8,13 @@ from admin_valid_check_sys.admin_valid_data import item_checking
 
 #---------admin_dispaly_Entry-----------------
 admin_dis_list=[]
-admin_dis_list.append(" (1) Add New Items Enter       : ")
-admin_dis_list.append(" (2) View Items Enter          : ")
-admin_dis_list.append(" (3) Delete Items Enter        : ")
-admin_dis_list.append(" (4) Add Employees Enter       : ")
-admin_dis_list.append(" (5) View Employees List Enter : ")
-admin_dis_list.append(" (6) Back Main Menu            : ")
-admin_dis_list.append(" (7) Exit Enter                : ")
+admin_dis_list.append(" (1) Add     New   Items    Enter : ")
+admin_dis_list.append(" (2) Store  View   Items    Enter : ")
+admin_dis_list.append(" (3) Our Store View Items   Enter : ")
+admin_dis_list.append(" (4) Our Store Delete Items Enter : ")
+admin_dis_list.append(" (5) Item  Price  Exchange  Enter : ")
+admin_dis_list.append(" (6) Back Main Menu               : ")
+admin_dis_list.append(" (7) Exit Enter                   : ")
 
 #----------admin_display_fun------------------
 def admin_display_menu():

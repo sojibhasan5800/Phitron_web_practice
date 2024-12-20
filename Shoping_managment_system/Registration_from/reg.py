@@ -35,13 +35,12 @@ def reg_display_from(user):
     result = user_data_check(user_cus_name,user_cus_email,user_cus_Number,user_cus_Password,user_retype_cus_password)
     user_id= None
     if(result):
-      user_id = Account.customer_seller_account_store(None,user_cus_name,
-                                              user_cus_email,user_cus_Number,
-                                              user_cus_Password,user)
-      
-    if(result and user == "Seller"):
-       create_shop(shope_name,user_id)
-          
+      user_id = Account.customer_seller_account_store(None,user_cus_name,user_cus_email,user_cus_Number,user_cus_Password,user)
+      if(user == "Seller"):
+         shop_id = user_id
+         shop_obj = create_shop(shope_name,shop_id)
+         Account.seller_shop_obj_store(None,user_cus_email,shop_obj)
+
     return result,user_id,user_cus_name
 
 #-------Login_From---------
@@ -52,7 +51,12 @@ def login_display_from():
   print("Create a strong password: ")
   user_cus_Password = str(input()).strip()
 
-  result ,user_id,users= Account.mail_matching(None,user_cus_email,user_cus_Password)
-  return result,user_id,users
+  result ,user_id,users,shop_obj= Account.mail_matching(None,user_cus_email,user_cus_Password)
+  if(shop_obj != None):
+     return result ,user_id,users,shop_obj
+  else:
+     return result,user_id,users,None
+     
+  
 
 

@@ -20,7 +20,7 @@ def user_display_menu():
 
 
 #-------------------------Users Display Data given---------------------
-
+#Wk connection on main Page
 while True:
     print()
     user_display_menu()
@@ -44,10 +44,10 @@ while True:
 
         elif(x==2):
              #-----------Seller_Registration-----------
-            result,user_id,user_cus_name =reg_display_from("Seller")
+            result,shop_id,user_cus_name =reg_display_from("Seller")
             if(result):
                     print(f"Dear {user_cus_name} Regsitration is Successfully")
-                    print(f"Your Account Id: {user_id}")
+                    print(f"Your Shop Id: {shop_id}")
                     continue
             else:
                 if(inside_checking()):
@@ -57,7 +57,7 @@ while True:
             
         elif(x==3):
              #-----------User_Login-----------
-            result,user_id,users = login_display_from()
+            result,user_id,users,shop_obj = login_display_from()
             if(result):
                 print(f"Login successful for user ID: {user_id}")
                 if(users=="Seller"):

@@ -5,7 +5,7 @@ import random
 class Account:
     __account_store={}
     __store_user_id=set()
-    
+    __shop_store_obj={}
     
     def _generate_emp_id(self):
          """Generate a unique 4-digit ID."""
@@ -28,13 +28,19 @@ class Account:
           }
           return user_id
     
+    def seller_shop_obj_store(self,user_cus_email:str,shop_obj):
+        self.__shop_store_obj[user_cus_email]=shop_obj
+    
     def mail_matching(self,user_cus_email,user_cus_password):
          
          for user_id, details in Account.__account_store.items():
             if details["Email_id"] == user_cus_email and details["Password"] == user_cus_password:
-                return True,user_id,details["User"]
+                if(details["User"]=="Seller"):
+                    return True,user_id,details["User"],self.__shop_store_obj[user_cus_email]
+                else:
+                    return True,user_id,details["User"],None
             else:
-                return False,False,False
+                return False,False,False,False
          
          
          
