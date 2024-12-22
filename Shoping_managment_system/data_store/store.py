@@ -29,14 +29,14 @@ class Account:
           return user_id
     
     def seller_shop_obj_store(self,user_cus_email:str,shop_obj):
-        self.__shop_store_obj[user_cus_email]=shop_obj
+        Account.__shop_store_obj[user_cus_email]=shop_obj
     
     def mail_matching(self,user_cus_email,user_cus_password):
          
          for user_id, details in Account.__account_store.items():
             if details["Email_id"] == user_cus_email and details["Password"] == user_cus_password:
                 if(details["User"]=="Seller"):
-                    return True,user_id,details["User"],self.__shop_store_obj[user_cus_email]
+                    return True,user_id,details["User"],Account.__shop_store_obj[user_cus_email]
                 else:
                     return True,user_id,details["User"],None
             else:

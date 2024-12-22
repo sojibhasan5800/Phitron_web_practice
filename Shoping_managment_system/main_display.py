@@ -2,8 +2,11 @@
 import re
 import os
 import sys
+sys.path.append(r"Shoping_managment_system")
 from valid_check_sys.valid_data import Cheking_User_data,inside_checking
 from Registration_from.reg import reg_display_from,login_display_from
+from seller_display.seller import seller_display_data
+
 
 #---------Users_dispaly_Entry-----------------
 main_lst=[]
@@ -60,8 +63,16 @@ while True:
             result,user_id,users,shop_obj = login_display_from()
             if(result):
                 print(f"Login successful for user ID: {user_id}")
+
+                #-----------seller_display-----------
                 if(users=="Seller"):
-                    pass
+                    running = seller_display_data(shop_obj)
+                    if(running == "main_page"):
+                        continue
+                    elif(running == "system_exit"):
+                        break
+                    
+                #-----------customer_display-----------
                 elif(users=="Customer"):
                     pass
             else:
