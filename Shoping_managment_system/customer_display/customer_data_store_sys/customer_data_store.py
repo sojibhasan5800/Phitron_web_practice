@@ -1,6 +1,8 @@
+
 #-------------Connection_System---------------
 import os
 import sys
+import random
 from tabulate import tabulate
 sys.path.append(r"Shoping_managment_system")
 from seller_display.admin_data_store_sys.admin_data_store import item_per_price,search_item
@@ -8,13 +10,15 @@ class Customer_manager:
     __custmer_store={}
     __order_store={}
     __invoice_no_store=set()
+    __cus_order_history={}
+
  #Working!!!!!!!!!!!
     def __init__(self,cus_name):
         self.__cus_name = cus_name
         self.__cus_cart ={}
         self.__cus_id=None
         self.__total_price=0
-        self.__cus_order_history={}
+        
     
     def get_cus_id(self):
         return self.__cus_id
@@ -36,7 +40,7 @@ class Customer_manager:
        
         
     #Customer_view_cart:
-    def view_cart(self):
+    def view_cart(self,taken = None):
         if not self.__cus_cart:
             print("No items Add in this cart.")
         
@@ -57,7 +61,9 @@ class Customer_manager:
         print(f"Customer_card : {self.__cus_id}")
         print(f"Total_Price   : {total_price}")
         print()
-
+        if(taken!=None):
+            return table
+        
     #Customer_remove_item_cart:
     def remove_item_quantity_cart(self,shop_id,item_name,symbol,quantity=0):
         
@@ -83,11 +89,11 @@ class Customer_manager:
                 return True
             
     #Customer_Order_Confirm:
-    def order_conframe(self,amount:int):
+    def order_conframe(self,amount:int,user_id):
         if not self.__cus_cart:
             print("No items Add in this cart.")
             return False
-        invoice_no = 
+        invoice_no = Customer_manager._generate_invoice_id(None)
         store_not_avaiable_item=[]
         total_price =0
         headers = ["Product", "Quantity", "per_price", "Total_Price","shop id"]
@@ -107,9 +113,22 @@ class Customer_manager:
         
         self.__total_price = total_price
         if( len(store_not_avaiable_item)==0 and amount>=total_price):
-            print(f"")
- 
-        
+            print(f"Youe Invoice No : {invoice_no} Buy Items Successfully")
+            self.__order_store[user_id]=invoice_no
+            if user_id not in self.__cus_order_history:
+                self.__cus_order_history[user_id]={}
+            self.__cus_order_history[user_id][invoice_no]= Customer_manager.view_cart(None,"table")
+            return True
+        elif(len(store_not_avaiable_item)!=0):
+            #Working
+
+
+    def _generate_invoice_id(self):
+        """Generate a unique 4-digit ID."""
+        while True:
+            invoice_id = random.randint(1000,9999)
+            if invoice_id not in Customer_manager.__invoice_no_store:
+                return invoice_id
 
 
 
