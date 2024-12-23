@@ -141,13 +141,21 @@ class Store_manager:
         print(f"Item Name '{item_name}' Per Price are '{Store_manager.__items_list[shop_id][item_name][1]} ")
     
     #Admin_Searching_Store
-    def admin_searching_item(self,shop_id,item_name):
+    def admin_searching_item(self,shop_id,item_name,check=None):
        
        if item_name not in Store_manager.__items_list[shop_id].keys():
            print(f"This item '{item_name}' are not founded !!")
+           if(check!=None):
+               return False
            return False,False
        per_price = Store_manager.__items_list[shop_id][item_name][1]
+       if(check=="Checking"):
+           return True
        return True,per_price
+    #Admin_get_item_price
+    def get_item_price(self,shop_id,item_name):
+         return Store_manager.__items_list[shop_id][item_name][1]
+
 
 #-------------- Seller_Service ---------------------------------
 def create_shop(shop_name,shop_id):
@@ -161,8 +169,12 @@ def store_all_item_display():
 def my_store_item_display(shop_id):
     Store_manager.our_store_view_item(None,shop_id)
 
-def search_item(shop_id,item_name):
-    return Store_manager.admin_searching_item(None,shop_id,item_name)
+def search_item(shop_id,item_name,check=None):
+    return Store_manager.admin_searching_item(None,shop_id,item_name,check)
+
+#-------------- Customer_Service ---------------------------------
+def item_per_price(shop_id,item_name):
+    return Store_manager.get_item_price(shop_id,item_name)
 
 
 

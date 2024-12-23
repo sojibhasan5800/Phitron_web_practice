@@ -12,6 +12,9 @@ def Cheking_User_data(x,users):
         elif(users=="Admin" and ( x<1 or x>7) ):
             print(f"Place Sir given This Number (1 to 7) are inclusive")
             return False
+        elif(users=="Customer" and ( x<1 or x>6) ):
+            print(f"Place Sir given This Number (1 to 7) are inclusive")
+            return False
         elif(users=="Seller_exchange" and ( x<1 or x>3) ):
             print(f"Place Sir given This Number (1 to 3) are inclusive")
             return False

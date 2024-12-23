@@ -6,7 +6,9 @@ class Account:
     __account_store={}
     __store_user_id=set()
     __shop_store_obj={}
+    __customer_obj={}
     
+
     def _generate_emp_id(self):
          """Generate a unique 4-digit ID."""
          while True:

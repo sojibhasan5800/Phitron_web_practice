@@ -45,15 +45,14 @@ def reg_display_from(user):
          shope_name = auto_complete_input("Enter Your Shop Name:", "Test Shop")
          shope_name = re.sub(r'\s{2,}', ' ', shope_name)
 
-         first_name = auto_complete_input("Enter First Name:", "John")
-         last_name = auto_complete_input("Enter Last Name:", "Doe")
-         user_cus_name = " ".join((first_name, last_name))
-         user_cus_name = re.sub(r'\s{2,}', ' ', user_cus_name)
-
-         user_cus_Number = auto_complete_input("Enter Phone Number:", "01623966595")
-         user_cus_email = auto_complete_input("Enter Email Id:", "john.doe@example.com")
-         user_cus_Password = auto_complete_input("Create a strong password:", "@StrongPass123")
-         user_retype_cus_password = auto_complete_input("Retype your password:", "@StrongPass123")
+     first_name = auto_complete_input("Enter First Name:", "John")
+     last_name = auto_complete_input("Enter Last Name:", "Doe")
+     user_cus_name = " ".join((first_name, last_name))
+     user_cus_name = re.sub(r'\s{2,}', ' ', user_cus_name)  
+     user_cus_Number = auto_complete_input("Enter Phone Number:", "01623966595")
+     user_cus_email = auto_complete_input("Enter Email Id:", "john.doe@example.com")
+     user_cus_Password = auto_complete_input("Create a strong password:", "@StrongPass123")
+     user_retype_cus_password = auto_complete_input("Retype your password:", "@StrongPass123")
 
      result = user_data_check(user_cus_name,user_cus_email,user_cus_Number,user_cus_Password,user_retype_cus_password)
      user_id= None
@@ -62,7 +61,11 @@ def reg_display_from(user):
         if(user == "Seller"):
            shop_id = user_id
            shop_obj = create_shop(shope_name,shop_id)
-           Account.seller_shop_obj_store(None,user_cus_email,shop_obj)  
+           Account.seller_shop_obj_store(None,user_cus_email,shop_obj)
+        elif(user=="Customer"):
+           cus_id = user_id
+           cus_obj = 
+           
      return result,user_id,user_cus_name
 
 #-------Login_From---------
