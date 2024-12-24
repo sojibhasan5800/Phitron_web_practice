@@ -11,7 +11,10 @@ def item_checking( item_name:str, item_quantity:int, item_price:int,itemer =None
           if not item_quantity.isdigit():
                     print("item_quantity are Invalid Place given Only integer Number")
           if not item_price.isdigit():
-                    print("item_price are Invalid Place given Only integer Number")
+                    if(itemer=="Customer"):
+                        print("Shop_id are Invalid Place given Only integer Number")
+                    else:                   
+                        print("item_price are Invalid Place given Only integer Number")
                 
           print("Sir place check your items information and try again !")
           return False

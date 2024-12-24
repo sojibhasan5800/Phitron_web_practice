@@ -8,6 +8,7 @@ sys.path.append(r"Shoping_managment_system")
 from valid_check_sys.valid_data import user_data_check
 from data_store.store import Account
 from seller_display.admin_data_store_sys.admin_data_store import create_shop
+from customer_display.customer_data_store_sys.customer_data_store import create_customer
 
 #------Regestration_From---------
 def reg_display_from(user):
@@ -64,7 +65,8 @@ def reg_display_from(user):
            Account.seller_shop_obj_store(None,user_cus_email,shop_obj)
         elif(user=="Customer"):
            cus_id = user_id
-           cus_obj = 
+           cus_obj = create_customer(user_cus_name,cus_id)
+           Account.customer_obj_store(None,user_cus_email,cus_obj)
            
      return result,user_id,user_cus_name
 
@@ -76,11 +78,9 @@ def login_display_from():
   print("Create a strong password: ")
   user_cus_Password = str(input()).strip()
 
-  result ,user_id,users,shop_obj= Account.mail_matching(None,user_cus_email,user_cus_Password)
-  if(shop_obj != None):
-     return result ,user_id,users,shop_obj
-  else:
-     return result,user_id,users,None
+  result ,user_id,users,user_obj= Account.mail_matching(None,user_cus_email,user_cus_Password)
+  return result ,user_id,users,user_obj
+
      
   
 

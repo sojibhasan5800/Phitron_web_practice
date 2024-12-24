@@ -12,11 +12,14 @@ def Cheking_User_data(x,users):
         elif(users=="Admin" and ( x<1 or x>7) ):
             print(f"Place Sir given This Number (1 to 7) are inclusive")
             return False
-        elif(users=="Customer" and ( x<1 or x>6) ):
-            print(f"Place Sir given This Number (1 to 7) are inclusive")
+        elif(users=="Customer" and ( x<1 or x>8) ):
+            print(f"Place Sir given This Number (1 to 8) are inclusive")
             return False
         elif(users=="Seller_exchange" and ( x<1 or x>3) ):
             print(f"Place Sir given This Number (1 to 3) are inclusive")
+            return False
+        elif(users=="Customer_exchange" and ( x<1 or x>4) ):
+            print(f"Place Sir given This Number (1 to 4) are inclusive")
             return False
         else:
             return True
@@ -100,6 +103,9 @@ def inside_checking(users_check="Admin"):
      elif(users_check=="Invalid_promt"):
          print("If you again Added Item  press     (1): ")
          print("If you  Not again Added Item press (0): ")
+     elif(users_check=="cus_Amount"):
+         print("If you again Added Amount  press     (1): ")
+         print("Otherwise you exit then Press        (0) :")
      elif(users_check=="Admin"):
          print("If you again input add  Press (1) :")
          print("Otherwise you exit then Press (0) :")

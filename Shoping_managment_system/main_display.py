@@ -6,6 +6,7 @@ sys.path.append(r"Shoping_managment_system")
 from valid_check_sys.valid_data import Cheking_User_data,inside_checking
 from Registration_from.reg import reg_display_from,login_display_from
 from seller_display.seller import seller_display_data
+from customer_display.customer import Customer_display_data
 
 
 #---------Users_dispaly_Entry-----------------
@@ -37,7 +38,7 @@ while True:
                 if(result):
                     print(f"Dear {user_cus_name} Regsitration is Successfully")
                     print(f"Your Account Id: {user_id}")
-                    continue
+                    break
                 else:
                     if(inside_checking()):
                         continue
@@ -51,7 +52,7 @@ while True:
             if(result):
                     print(f"Dear {user_cus_name} Regsitration is Successfully")
                     print(f"Your Shop Id: {shop_id}")
-                    continue
+                    break
             else:
                 if(inside_checking()):
                     continue
@@ -60,13 +61,13 @@ while True:
             
         elif(x==3):
              #-----------User_Login-----------
-            result,user_id,users,shop_obj = login_display_from()
+            result,user_id,users,user_obj = login_display_from()
             if(result):
                 print(f"Login successful for user ID: {user_id}")
 
                 #-----------seller_display-----------
                 if(users=="Seller"):
-                    running = seller_display_data(shop_obj)
+                    running = seller_display_data(user_obj)
                     if(running == "main_page"):
                         continue
                     elif(running == "system_exit"):
@@ -74,7 +75,11 @@ while True:
                     
                 #-----------customer_display-----------
                 elif(users=="Customer"):
-                    pass
+                    running = Customer_display_data(user_obj,user_id)
+                    if(running == "main_page"):
+                        continue
+                    elif(running == "system_exit"):
+                        break
             else:
                 print("Invalid email or password")
                 continue

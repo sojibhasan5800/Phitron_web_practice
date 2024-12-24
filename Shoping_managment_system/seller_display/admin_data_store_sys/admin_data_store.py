@@ -126,6 +126,7 @@ class Store_manager:
         Store_manager.__items_list[shop_id][buy_item_name][0]-=buy_quantity
         if Store_manager.__items_list[shop_id][buy_item_name][0]==0:
             del Store_manager.__items_list[shop_id][buy_item_name]
+        return True
         
     # Admin_Item_price_exchange
     def admin_exchnage_price(self,shop_id:int,item_name:str,ex_item_price:int,exchange_type:str):
@@ -140,21 +141,48 @@ class Store_manager:
         print(f"Item Name '{item_name}' Price Added '{ex_item_price} Successfully")
         print(f"Item Name '{item_name}' Per Price are '{Store_manager.__items_list[shop_id][item_name][1]} ")
     
-    #Admin_Searching_Store
-    def admin_searching_item(self,shop_id,item_name,check=None):
+    #Admin_Searching_Store_seller
+    def admin_searching_item_seller(self,shop_id,item_name):
        
        if item_name not in Store_manager.__items_list[shop_id].keys():
            print(f"This item '{item_name}' are not founded !!")
-           if(check!=None):
-               return False
            return False,False
+       
        per_price = Store_manager.__items_list[shop_id][item_name][1]
-       if(check=="Checking"):
-           return True
        return True,per_price
+    
+    #Admin_Searching_Store_Customer
+    def admin_searching_item_Customer(self,shop_id,item_name,Quantity):
+       if shop_id not in Store_manager.__items_list:
+           print(f"This Shop id '{shop_id}' are not founded !!")
+           return False
+        
+       if item_name not in Store_manager.__items_list[shop_id]:
+           print(f"This item '{item_name}' are not founded !!")
+           return False
+       if Store_manager.__items_list[shop_id][item_name][0]<Quantity :
+           print(f"This Item '{Quantity}' not enough our store !!")
+           return False
+       
+       return True
+    
     #Admin_get_item_price
     def get_item_price(self,shop_id,item_name):
+         
+         if shop_id not in Store_manager.__items_list :
+            return 0
+         if item_name not in Store_manager.__items_list[shop_id]:
+             return 0
+         
          return Store_manager.__items_list[shop_id][item_name][1]
+    
+    #Admin_Sell_item
+    def get_sell_conframe(self,shop_id,item_name,item_quantity):
+         if(Store_manager.admin_sell_decrease_item(None,shop_id,item_name,item_quantity)):
+             return True
+         else:
+             return False
+         
 
 
 #-------------- Seller_Service ---------------------------------
@@ -169,26 +197,34 @@ def store_all_item_display():
 def my_store_item_display(shop_id):
     Store_manager.our_store_view_item(None,shop_id)
 
-def search_item(shop_id,item_name,check=None):
+def search_item_seller(shop_id,item_name,check=None):
     return Store_manager.admin_searching_item(None,shop_id,item_name,check)
 
 #-------------- Customer_Service ---------------------------------
+
+def search_item_customer(shop_id,item_name,Quantity=None):
+    return Store_manager.admin_searching_item_Customer(None,shop_id,item_name,Quantity)
+
 def item_per_price(shop_id,item_name):
-    return Store_manager.get_item_price(shop_id,item_name)
+    return Store_manager.get_item_price(None,shop_id,item_name)
+
+def selling_order(shop_id,item_name,item_quantity):
+    return Store_manager.get_sell_conframe(None,shop_id,item_name,item_quantity)
+
+
 
 
 
 
 #-------------- main_function ----------------------------------
-# shop1 = create_shop("Shop1", 1)
-# shop2 = create_shop("Shop2", 2)
-# shop3= create_shop("ss",50)
+shop1 = create_shop("Shop1", 1)
 
 
-# # Adding items
-# shop1.add_new_item("Potato", 100, 5)
-# shop1.add_new_item("Onion", 50, 10)
-# shop3.add_new_item("alo",30,5)
+
+# Adding items
+shop1.add_new_item("Potato", 100, 5)
+shop1.add_new_item("Onion", 50, 10)
+print(item_per_price(1,"Onion"))
 
 # # Selling items
 # shop1.admin_sell_decrease_item(1,"Potato", 20)

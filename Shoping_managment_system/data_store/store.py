@@ -3,10 +3,10 @@ import random
 #-----------Seller & Customer_Account Store-----------
        
 class Account:
-    __account_store={}
-    __store_user_id=set()
-    __shop_store_obj={}
-    __customer_obj={}
+    __account_store={} # key : user_id ,key_value: name,email_id,number,password,user
+    __store_user_id=set() # value: unique user id
+    __shop_store_obj={} #key : seller_email , value: seller_obj
+    __customer_store_obj={} # key : customer_email, value : customer_obj
     
 
     def _generate_emp_id(self):
@@ -30,8 +30,13 @@ class Account:
           }
           return user_id
     
+    #Add shop_sotre_obj
     def seller_shop_obj_store(self,user_cus_email:str,shop_obj):
         Account.__shop_store_obj[user_cus_email]=shop_obj
+   
+   #Add_customer_store_obj
+    def customer_obj_store(self,user_cus_email:str,cus_obj):
+        Account.__customer_store_obj[user_cus_email]=cus_obj
     
     def mail_matching(self,user_cus_email,user_cus_password):
          
@@ -40,7 +45,7 @@ class Account:
                 if(details["User"]=="Seller"):
                     return True,user_id,details["User"],Account.__shop_store_obj[user_cus_email]
                 else:
-                    return True,user_id,details["User"],None
+                    return True,user_id,details["User"],Account.__customer_store_obj[user_cus_email]
             else:
                 return False,False,False,False
          

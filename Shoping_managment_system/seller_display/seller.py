@@ -4,7 +4,7 @@ import sys
 import os
 sys.path.append(r"Shoping_managment_system")
 from valid_check_sys.valid_data import Cheking_User_data,inside_checking
-from seller_display.admin_data_store_sys.admin_data_store import Store_manager,store_all_item_display,my_store_item_display,search_item
+from seller_display.admin_data_store_sys.admin_data_store import Store_manager,store_all_item_display,my_store_item_display,search_item_seller
 from seller_display.admin_valid_check_sys.admin_valid_data import item_checking
 
 
@@ -109,7 +109,7 @@ def seller_display_data(shop_obj):
                         continue
                    
                     shop_id = shop_obj.get_shop_id()
-                    item_exit,per_price = search_item(shop_id,item_name)
+                    item_exit,per_price = search_item_seller(shop_id,item_name)
 
                     if(Cheking_User_data(exchnage_type_str,"Seller_exchange") and item_exit):
                         if(exchnage_type==1):
