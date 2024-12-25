@@ -56,8 +56,11 @@ def reg_display_from(user):
      user_retype_cus_password = auto_complete_input("Retype your password:", "@StrongPass123")
 
      result = user_data_check(user_cus_name,user_cus_email,user_cus_Number,user_cus_Password,user_retype_cus_password)
+     
      user_id= None
      if(result):
+        if(Account.duplicated_mail_checking(None,user_cus_email,user)==False):
+           return False,False,False
         user_id = Account.customer_seller_account_store(None,user_cus_name,user_cus_email,user_cus_Number,user_cus_Password,user)
         if(user == "Seller"):
            shop_id = user_id

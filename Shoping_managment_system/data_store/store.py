@@ -16,9 +16,8 @@ class Account:
              if un_user_id not in Account.__store_user_id:
                  return un_user_id
     
-    def customer_seller_account_store(self,user_cus_name,
-                                       user_cus_email,user_cus_Number,
-                                       user_cus_Password,user):
+    def customer_seller_account_store(self,user_cus_name, user_cus_email,user_cus_Number,user_cus_Password,user):
+                                                                        
           user_id = Account._generate_emp_id(None)
           Account.__account_store[user_id]={
            "Name": user_cus_name,
@@ -48,6 +47,16 @@ class Account:
                     return True,user_id,details["User"],Account.__customer_store_obj[user_cus_email]
             else:
                 return False,False,False,False
+    
+    def duplicated_mail_checking(self,user_cus_mail,users):
+        if(users=="Seller"):
+            if user_cus_mail in Account.__shop_store_obj.keys():
+                return False
+        elif(users=="Customer"):
+            if user_cus_mail in Account.__customer_store_obj.keys():
+                return False
+        return True
+
          
          
          
