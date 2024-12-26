@@ -2,7 +2,7 @@
 import re
 import os
 import sys
-sys.path.append(r"Shoping_managment_system")
+sys.path.append(r"Phitron_web_practice\Shoping_managment_system")
 from valid_check_sys.valid_data import Cheking_User_data,inside_checking
 from Registration_from.reg import reg_display_from,login_display_from
 from seller_display.seller import seller_display_data
